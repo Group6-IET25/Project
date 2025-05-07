@@ -1,21 +1,29 @@
 import express from "express"
 import bcrypt from "bcryptjs"
 import Healthcare from "../models/healthcare.model.js"
-import { generateTokenAndSetCookieForHealthcare } from "../utils/generateToken.js"
+import generateTokenAndSetCookie from "../utils/generateToken.js"
 
 const router = express.Router()
 
 router.post("/signup", signup)
-
 router.post("/login", login)
-
-router.post("/logout", logout)
 
 //signup controller
 async function signup(req, res) {
   try {
     const { name, email, password, contact, address } = req.body
-
+    if (
+      name == null ||
+      email == null ||
+      password == null ||
+      contact == null ||
+      address == null
+    ) {
+      return res.status(400).json({ message: "Incomplete Healthcare Data" })
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ error: "Minimum password length is 6!" })
+    }
     const healthcare = await Healthcare.findOne({ email })
     if (healthcare) {
       return res.status(400).json({ error: "Email already in use" })
@@ -33,14 +41,10 @@ async function signup(req, res) {
     })
 
     if (newHealthcare) {
-      generateTokenAndSetCookieForHealthcare(newHealthcare._id, res)
+      generateTokenAndSetCookie(newHealthcare._id, res)
       await newHealthcare.save()
 
-      return res.status(201).json({
-        _id: newHealthcare._id,
-        name: newHealthcare.name,
-        email: newHealthcare.email,
-      })
+      return res.status(201).json({ message: "Signup Successfull!" })
     } else {
       return res.status(400).json({ error: "Invalid Healthcare Data." })
     }
@@ -68,27 +72,13 @@ async function login(req, res) {
       return res.status(400).json({ error: "Invalid Password" })
     }
 
-    generateTokenAndSetCookieForHealthcare(healthcare._id, res)
+    generateTokenAndSetCookie(healthcare._id, res)
 
-    return res.status(200).json({
-      _id: healthcare._id,
-      name: healthcare.name,
-      email: healthcare.email,
-    })
+    return res.status(200).json({ message: "Login Successfull!" })
   } catch (error) {
     console.log("Error in login:", error.message)
     return res.status(500).json({ error: "Internal Server Error" })
   }
 }
 
-//logout controller
-function logout(req, res) {
-  try {
-    res.cookie("jwt", "", { maxAge: 0 })
-    res.status(200).json({ message: "Logged Out Successfully!" })
-  } catch (error) {
-    console.log("Error in logout:", error.message)
-    res.status(500).json({ error: "Internal Server Error" })
-  }
-}
 export default router

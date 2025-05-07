@@ -10,7 +10,7 @@ const AccidentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Healthcare",
   },
-  location: {
+  accidentLocation: {
     type: String,
     required: true,
   },
