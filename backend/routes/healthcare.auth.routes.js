@@ -1,7 +1,7 @@
 import express from "express"
 import bcrypt from "bcryptjs"
 import Healthcare from "../models/healthcare.model.js"
-import generateTokenAndSetCookie from "../utils/generateToken.js"
+import { generateToken } from "../utils/tokenManager.js"
 
 const router = express.Router()
 
@@ -41,10 +41,12 @@ async function signup(req, res) {
     })
 
     if (newHealthcare) {
-      generateTokenAndSetCookie(newHealthcare._id, res)
+      const token = generateToken(newHealthcare._id)
       await newHealthcare.save()
 
-      return res.status(201).json({ message: "Signup Successfull!" })
+      return res
+        .status(201)
+        .json({ message: "Signup Successfull!", jwt: token })
     } else {
       return res.status(400).json({ error: "Invalid Healthcare Data." })
     }
@@ -72,9 +74,9 @@ async function login(req, res) {
       return res.status(400).json({ error: "Invalid Password" })
     }
 
-    generateTokenAndSetCookie(healthcare._id, res)
+    const token = generateToken(healthcare._id, res)
 
-    return res.status(200).json({ message: "Login Successfull!" })
+    return res.status(200).json({ message: "Login Successfull!", jwt: token })
   } catch (error) {
     console.log("Error in login:", error.message)
     return res.status(500).json({ error: "Internal Server Error" })

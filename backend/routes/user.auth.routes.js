@@ -1,7 +1,7 @@
 import express from "express"
 import bcrypt from "bcryptjs"
 import User from "../models/user.model.js"
-import generateTokenAndSetCookie from "../utils/generateToken.js"
+import { generateToken } from "../utils/tokenManager.js"
 
 const router = express.Router()
 
@@ -45,9 +45,11 @@ async function signup(req, res) {
     })
 
     if (newUser) {
-      generateTokenAndSetCookie(newUser._id, res)
+      const token = generateToken(newUser._id)
       await newUser.save()
-      return res.status(201).json({ message: "Signup successfull !" })
+      return res
+        .status(201)
+        .json({ message: "Signup successfull !", jwt: token })
     } else {
       return res.status(400).json({ error: "Invalid User Data." })
     }
@@ -72,9 +74,9 @@ async function login(req, res) {
       return res.status(400).json({ error: "Invalid Password." })
     }
 
-    generateTokenAndSetCookie(user._id, res)
+    const token = generateToken(user._id)
 
-    return res.status(200).json({ message: "Login successfull!" })
+    return res.status(200).json({ message: "Login successfull !", jwt: token })
   } catch (error) {
     console.log("Error in login:", error.message)
     return res.status(500).json({ error: "Internal Server Error." })

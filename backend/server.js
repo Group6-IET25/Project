@@ -13,13 +13,13 @@ const __dirname = path.resolve()
 dotenv.config()
 
 const app = express()
+app.use(express.json())
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: ["*", "http://192.168.81.207:5173", "http://localhost:5173"],
     credentials: true,
   })
 )
-app.use(express.json())
 app.use(cookieParser())
 app.use("/api/auth/user", userAuthRouter)
 app.use("/api/auth/healthcare", healthcareAuthRouter)
@@ -29,10 +29,10 @@ app.use("/api/", (req, res) => {
   res.json({ error: "Invalid API endpoint." })
 })
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")))
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/frontend/dist/index.html"))
-})
+// app.use(express.static(path.join(__dirname, "/frontend/dist")))
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "/frontend/dist/index.html"))
+// })
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {

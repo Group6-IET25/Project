@@ -4,15 +4,13 @@ const AccidentSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
   },
-  handledBy: {
+  healthcareId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Healthcare",
   },
   accidentLocation: {
     type: String,
-    required: true,
   },
 })
 
