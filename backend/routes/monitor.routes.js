@@ -19,9 +19,16 @@ async function handleIncomingFrames(req, res) {
   try {
     const currentFramePath = req.file.path
     console.log(currentFramePath)
-    // we get current frame's path via multer
     // test frame against model
-    // const testResponse = await fetch("localhost:")
+    const form = new FormData()
+    // Attach image to form
+    form.append("frame", fs.createReadStream(currentFramePath))
+    // Send image to remote FastAPI model
+    // const testResponse = await fetch(process.env.MODEL_URL, {
+    //   method: "POST",
+    //   body: form,
+    //   headers: form.getHeaders(),
+    // });
     const testResponse = { accident: true }
     // no return as we need to remove file from our directory
     return res.status(200).json(testResponse)
