@@ -1,0 +1,7 @@
+0) python -m venv venv
+To run python's virtual env run : 
+1) venv\Scripts\activate
+2) python install -r requirements.txt
+3) uvicorn main:app --reload
+
+4) deactivate
