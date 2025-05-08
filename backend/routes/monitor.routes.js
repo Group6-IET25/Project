@@ -1,6 +1,8 @@
 import express from "express"
 import fs from "fs"
-
+import path from "path"
+import FormData from "form-data"
+import fetch from "node-fetch"
 import { upload } from "../utils/upload.js"
 import { decodeToken } from "../utils/tokenManager.js"
 
@@ -9,31 +11,34 @@ import AccidentModel from "../models/accident.model.js"
 const router = express.Router()
 router.post("/user/upload", upload.single("frame"), handleIncomingFrames)
 router.post("/user/response", handleUserResponse)
-router.get("/user/track", trackAccident)
+router.post("/user/track", trackAccident)
 
 router.get("/healthcare/dashboard", getAvailableHelps)
 router.post("/healthcare/help", markHealthcareHelping)
 
 // this controller tests the incoming frames against the model
+const __dirname = path.resolve()
 async function handleIncomingFrames(req, res) {
   try {
     const currentFramePath = req.file.path
     console.log(currentFramePath)
+    const absolutePath = path.join(__dirname, currentFramePath)
     // test frame against model
     const form = new FormData()
     // Attach image to form
-    form.append("frame", fs.createReadStream(currentFramePath))
+    form.append("file", fs.createReadStream(absolutePath), req.file.filename)
+
     // Send image to remote FastAPI model
-    // const testResponse = await fetch(process.env.MODEL_URL, {
-    //   method: "POST",
-    //   body: form,
-    //   headers: form.getHeaders(),
-    // });
-    const testResponse = { accident: true }
+    const response = await fetch(process.env.MODEL_URL, {
+      method: "POST",
+      body: form,
+    })
+    const result = await response.json()
+    const testResponse = { accident: result.accident }
     // no return as we need to remove file from our directory
     return res.status(200).json(testResponse)
   } catch (error) {
-    console.log("Error in handleIncomingFrames: ", error.message)
+    console.log("Error in handleIncomingFrames: ", error)
     res.status(500).json({ error: "Internal Server Error!" })
   } finally {
     // must remove the file from our directory
@@ -54,7 +59,7 @@ async function handleUserResponse(req, res) {
     }
     const newAccident = new AccidentModel({
       userId: userId,
-      healthcareId: null,
+      healthcareId: "681b58fa3969e20340cebe82",
       accidentLocation: `Latitude: ${latitude}, Longitude: ${longitude}`,
     })
     if (newAccident) {
@@ -75,9 +80,10 @@ async function handleUserResponse(req, res) {
 async function trackAccident(req, res) {
   try {
     const { accidentId } = req.body
+    console.log(accidentId)
     const accident = await AccidentModel.findById(accidentId)
     if (accident == null) {
-      return res.status(400).json({ message: "Invalid Accident ID." })
+      return res.status(400).json({ error: "Invalid Accident ID." })
     }
     // get healthcare names and details
     if (accident.healthcareId == null) {
@@ -93,9 +99,7 @@ async function trackAccident(req, res) {
     if (!result) {
       throw new Error("Couldn't get response")
     }
-    const response = result.toObject() // Convert to plain JS object
-    response.message = "Help is on way!"
-    return res.status(201).json(response)
+    return res.status(201).json(result)
   } catch (error) {
     console.log("Error in trackAccident:", error.message)
     return res.status(500).json({ error: "Internal Server Error!" })
