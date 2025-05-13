@@ -3,21 +3,20 @@ import fs from "fs"
 import path from "path"
 import FormData from "form-data"
 import fetch from "node-fetch"
+
 import { upload } from "../utils/upload.js"
 import { decodeToken } from "../utils/tokenManager.js"
-
 import UserModel from "../models/user.model.js"
 import AccidentModel from "../models/accident.model.js"
-const router = express.Router()
-router.post("/user/upload", upload.single("frame"), handleIncomingFrames)
-router.post("/user/response", handleUserResponse)
-router.post("/user/track", trackAccident)
 
-router.get("/healthcare/dashboard", getAvailableHelps)
-router.post("/healthcare/help", markHealthcareHelping)
+const router = express.Router()
+const __dirname = path.resolve()
+
+router.post("/upload", upload.single("frame"), handleIncomingFrames)
+router.post("/response", handleUserResponse)
+router.post("/track", trackAccident)
 
 // this controller tests the incoming frames against the model
-const __dirname = path.resolve()
 async function handleIncomingFrames(req, res) {
   try {
     const currentFramePath = req.file.path
@@ -27,9 +26,8 @@ async function handleIncomingFrames(req, res) {
     const form = new FormData()
     // Attach image to form
     form.append("file", fs.createReadStream(absolutePath), req.file.filename)
-
     // Send image to remote FastAPI model
-    const response = await fetch(process.env.MODEL_URL, {
+    const response = await fetch(`${process.env.MODEL_URL}/api/model/predict`, {
       method: "POST",
       body: form,
     })
@@ -59,8 +57,8 @@ async function handleUserResponse(req, res) {
     }
     const newAccident = new AccidentModel({
       userId: userId,
-      healthcareId: "681b58fa3969e20340cebe82",
-      accidentLocation: `Latitude: ${latitude}, Longitude: ${longitude}`,
+      healthcareId: null,
+      accidentLocation: `https://www.google.com/maps?q=${latitude},${longitude}`,
     })
     if (newAccident) {
       // in case of accident, create a new aciddent and save it
@@ -87,7 +85,9 @@ async function trackAccident(req, res) {
     }
     // get healthcare names and details
     if (accident.healthcareId == null) {
-      return res.status(200).json({ message: "Someone will soon connect !" })
+      return res
+        .status(200)
+        .json({ message: "Someone will soon connect to help you !" })
     }
     let result = await AccidentModel.findById(accidentId)
       .populate({
@@ -105,47 +105,4 @@ async function trackAccident(req, res) {
     return res.status(500).json({ error: "Internal Server Error!" })
   }
 }
-
-// this controller sends the logged in healthcare list of person who they can help
-async function getAvailableHelps(req, res) {
-  try {
-    const availableHelps = await AccidentModel.find({ healthcareId: null })
-      .populate({
-        path: "userId",
-        select: "-password -__v ",
-      })
-      .select("-__v")
-    return res.status(200).json(availableHelps)
-  } catch (error) {
-    console.log("Error in getAvailableHelps: ", error.message)
-    return res.status(500).json({ error: "Internal Server Error!" })
-  }
-}
-
-// this controller marks healthcare who opted to help
-async function markHealthcareHelping(req, res) {
-  try {
-    const { token, accidentId } = req.healthcare._id
-    const healthcareId = decodeToken(token, res)
-    const isIdValid = await AccidentModel.findById(healthcareId)
-    if (!isIdValid) {
-      return res.status(400).json({ error: "Wrong token credentials!" })
-    }
-    const result = await AccidentModel.findOneAndUpdate(
-      { _id: accidentId },
-      { $set: { healthcareId: healthcareId } }
-    ).select("-__v")
-
-    if (!result) {
-      throw new Error("Something went wrong !")
-    }
-    const response = result.toObject()
-    response.message = "Marked Helping !"
-    return res.status(201).json(result)
-  } catch (error) {
-    console.log("Error in markHealthcareHelping: ", error.message)
-    return res.status(500).json({ error: "Internal Server Error!" })
-  }
-}
-
 export default router

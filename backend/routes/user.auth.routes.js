@@ -1,5 +1,6 @@
 import express from "express"
 import bcrypt from "bcryptjs"
+
 import User from "../models/user.model.js"
 import { generateToken } from "../utils/tokenManager.js"
 
@@ -21,10 +22,10 @@ async function signup(req, res) {
       personalContact == null ||
       address == null
     ) {
-      return res.status(400).json({ error: "Incomplete User Data!" })
+      return res.status(400).json({ error: "Incomplete User Data." })
     }
     if (password.length < 6) {
-      return res.status(400).json({ error: "Minimum password length is 6!" })
+      return res.status(400).json({ error: "Minimum password length is 6." })
     }
     const user = await User.findOne({ email })
 
@@ -34,15 +35,17 @@ async function signup(req, res) {
 
     const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(password, salt)
-
+    //  to convert special characters and spaces into a URL-safe format — called URL encoding.
+    const encodedAddress = encodeURIComponent(address)
     const newUser = new User({
       name,
       email,
       password: hashPassword,
       personalContact,
       familyContact,
-      address,
+      address: `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`,
     })
+    // google maps api to convert address to pinpoint on map
 
     if (newUser) {
       const token = generateToken(newUser._id)

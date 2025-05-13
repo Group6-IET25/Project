@@ -31,13 +31,13 @@ async function signup(req, res) {
 
     const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(password, salt)
-
+    const encodedAddress = encodeURIComponent(address)
     const newHealthcare = new Healthcare({
       name,
       email,
       password: hashPassword,
       contact,
-      address,
+      address: `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`,
     })
 
     if (newHealthcare) {
