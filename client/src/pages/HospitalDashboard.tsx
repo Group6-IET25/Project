@@ -1,10 +1,5 @@
-"use client"
-
-import { useState } from "react"
-import { Bell, ChevronDown, Home, Image, Menu, Settings, Users } from "lucide-react"
-// import Image from "next/image"
-
-
+import { useEffect, useState } from "react"
+import { Bell, ChevronDown, Home, Menu, Settings, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -17,40 +12,38 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
+import { log } from "console"
 
 export default function HospitalDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [accidentNotifications, setAccidentNotifications] = useState([])
 
-  // Sample accident notifications data
-  const accidentNotifications = [
-    {
-      id: 1,
-      patientName: "John Doe",
-      mobileNumber: "+1 (555) 123-4567",
-      familyMobileNumber: "+1 (555) 987-6543",
-      location: "Highway 101, Mile Marker 25",
-      timestamp: "10 minutes ago",
-      severity: "Critical",
-    },
-    {
-      id: 2,
-      patientName: "Jane Smith",
-      mobileNumber: "+1 (555) 234-5678",
-      familyMobileNumber: "+1 (555) 876-5432",
-      location: "Main Street & 5th Avenue",
-      timestamp: "25 minutes ago",
-      severity: "Moderate",
-    },
-    {
-      id: 3,
-      patientName: "Robert Johnson",
-      mobileNumber: "+1 (555) 345-6789",
-      familyMobileNumber: "+1 (555) 765-4321",
-      location: "Central Park, East Entrance",
-      timestamp: "45 minutes ago",
-      severity: "Stable",
-    },
-  ]
+  useEffect(() => {
+    // check how the user arrived
+    const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[]
+    const navType = navEntries.length > 0 ? navEntries[0].type : "navigate"
+    const hasVisited = sessionStorage.getItem("hasVisitedHospitalDashboard")
+
+    // only on hard reload or first-ever landing in this session
+    if (navType === "reload" || !hasVisited) {
+      sessionStorage.setItem("hasVisitedHospitalDashboard", "true")
+
+      const fetchNotifications = async () => {
+        try {
+          const res = await fetch(
+            "http://192.168.81.204:5000/api/monitor/healthcare/dashboard"
+          )
+          const data = await res.json()
+          console.log(data);
+          setAccidentNotifications(data)
+        } catch (error) {
+          console.error("Failed to fetch accident notifications", error)
+        }
+      }
+
+      fetchNotifications()
+    }
+  }, [])
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -106,12 +99,10 @@ export default function HospitalDashboard() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="rounded-full">
-              <Image
-                // src="/placeholder.svg?height=32&width=32"
-                width={32}
-                height={32}
-                // alt="User"
-                className="rounded-full"
+              <img
+                src="https://via.placeholder.com/32"
+                alt="User"
+                className="rounded-full w-8 h-8"
               />
               <span className="sr-only">Toggle user menu</span>
             </Button>
@@ -134,14 +125,12 @@ export default function HospitalDashboard() {
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link to="/home" className="flex items-center gap-2 font-semibold">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
+                className="h-6 w-6"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-6 w-6"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M8 3H5a2 2 0 0 0-2 2v3m6 0h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3" />
                 <path d="m12 12 4 10 1.7-4.3L22 16Z" />
@@ -155,28 +144,28 @@ export default function HospitalDashboard() {
               <div className="space-y-1">
                 <Link
                   to="/home"
-                  className="flex items-center gap-3 rounded-lg bg-primary px-3 py-2 text-primary-foreground transition-all hover:text-primary-foreground"
+                  className="flex items-center gap-3 rounded-lg bg-primary px-3 py-2 text-primary-foreground hover:text-primary-foreground"
                 >
                   <Home className="h-5 w-5" />
                   Dashboard
                 </Link>
                 <Link
                   to="/home"
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground"
                 >
                   <Users className="h-5 w-5" />
                   Patients
                 </Link>
                 <Link
                   to="/home"
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground"
                 >
                   <Bell className="h-5 w-5" />
                   Notifications
                 </Link>
                 <Link
                   to="/home"
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground"
                 >
                   <Settings className="h-5 w-5" />
                   Settings
@@ -195,14 +184,11 @@ export default function HospitalDashboard() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="h-8 gap-1">
-                  <Image
-                    // src="/placeholder.svg?height=24&width=24"
-                    width={24}
-                    height={24}
-                    // alt="User"
-                    className="rounded-full"
+                  <img
+                    src="https://via.placeholder.com/24"
+                    alt="User"
+                    className="rounded-full w-6 h-6"
                   />
-                  <span className="hidden sm:inline-flex">Dr. Sarah Wilson</span>
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 </Button>
               </DropdownMenuTrigger>
@@ -221,24 +207,15 @@ export default function HospitalDashboard() {
           <div className="p-4 lg:p-6">
             <div className="grid gap-4">
               {accidentNotifications.map((notification) => (
-                <Card key={notification.id} className="w-full">
+                <Card key={notification.userId?._id} className="w-full">
                   <CardHeader className="flex flex-row items-center gap-4 pb-2">
                     <div>
                       <CardTitle className="text-xl">
-                        {notification.patientName}
-                        <span
-                          className={`ml-2 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                            notification.severity === "Critical"
-                              ? "bg-red-100 text-red-800"
-                              : notification.severity === "Moderate"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-green-100 text-green-800"
-                          }`}
-                        >
-                          {notification.severity}
-                        </span>
+                        {notification.userId?.name}
                       </CardTitle>
-                      <p className="text-sm text-muted-foreground">{notification.timestamp}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {notification.timestamp}
+                      </p>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -246,20 +223,26 @@ export default function HospitalDashboard() {
                       <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3">
                         <div>
                           <p className="text-sm font-medium">Patient Mobile</p>
-                          <p className="text-sm text-muted-foreground">{notification.mobileNumber}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {notification.userId?.personalContact}
+                          </p>
                         </div>
                         <div>
                           <p className="text-sm font-medium">Family Contact</p>
-                          <p className="text-sm text-muted-foreground">{notification.familyMobileNumber}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {notification.userId?.familyContact}
+                          </p>
                         </div>
                         <div>
-                          <p className="text-sm font-medium">Location</p>
-                          <p className="text-sm text-muted-foreground">{notification.location}</p>
+                          <p className="text-sm font-medium">Address</p>
+                          <p className="text-sm text-muted-foreground">
+                            {notification.userId?.address}
+                          </p>
                         </div>
                       </div>
                       <div className="flex justify-end gap-2 pt-2">
                         <Button size="sm" variant="outline">
-                          View Details
+                          Location
                         </Button>
                         <Button size="sm">Respond</Button>
                       </div>
@@ -274,4 +257,3 @@ export default function HospitalDashboard() {
     </div>
   )
 }
-
