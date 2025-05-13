@@ -12,6 +12,11 @@ const AccidentSchema = new mongoose.Schema({
   accidentLocation: {
     type: String,
   },
+  status: {
+    type: String,
+    enum: ["NeedsHelp", "Helping", "Helped"],
+    // to limit what can be there
+  },
 })
 
 const AccidentModel = mongoose.model("Accidents", AccidentSchema)

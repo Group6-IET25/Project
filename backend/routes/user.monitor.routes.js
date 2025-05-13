@@ -1,7 +1,7 @@
 import express from "express"
 import fs from "fs"
 import path from "path"
-import FormData from "form-data"
+// import FormData from "form-data"
 import fetch from "node-fetch"
 
 import { upload } from "../utils/upload.js"
@@ -19,6 +19,8 @@ router.post("/track", trackAccident)
 // this controller tests the incoming frames against the model
 async function handleIncomingFrames(req, res) {
   try {
+    // below line is for testing purpose
+    // return res.status(200).json({ accident: true })
     const currentFramePath = req.file.path
     console.log(currentFramePath)
     const absolutePath = path.join(__dirname, currentFramePath)
@@ -59,6 +61,7 @@ async function handleUserResponse(req, res) {
       userId: userId,
       healthcareId: null,
       accidentLocation: `https://www.google.com/maps?q=${latitude},${longitude}`,
+      status: "NeedsHelp",
     })
     if (newAccident) {
       // in case of accident, create a new aciddent and save it
@@ -94,7 +97,7 @@ async function trackAccident(req, res) {
         path: "healthcareId",
         select: "-password",
       })
-      .select("-__v")
+      .select("-__v -status")
 
     if (!result) {
       throw new Error("Couldn't get response")
