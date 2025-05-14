@@ -10,12 +10,15 @@ import {
   StopCircle,
   AlertTriangle,
   Clock,
+  Shield,
+  ChevronDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -32,6 +35,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Progress } from "@/components/ui/progress"
 import AccidentNotification from "@/components/accident-notification"
+import { motion } from "framer-motion"
 
 export default function UserDashboard() {
   const [isRecording, setIsRecording] = useState(false)
@@ -248,32 +252,40 @@ export default function UserDashboard() {
     setShowDangerAlert(false)
   }
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-white to-teal-50">
       {/* Header with user profile */}
-      <header className="border-b">
-        <div className="container flex h-16 items-center justify-between p-4">
-          <h1 className="text-xl font-bold">Safety Dashboard</h1>
+      <header className="sticky top-0 z-30 border-b bg-white/80 backdrop-blur shadow-sm">
+        <div className="container flex h-16 items-center justify-between px-6">
+          <div className="flex items-center gap-2">
+            <Shield className="h-7 w-7 text-teal-600" />
+            <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
+              AccidentShield
+            </span>
+          </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+              <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/placeholder.svg" alt="User" />
-                  <AvatarFallback>U</AvatarFallback>
+                  <AvatarFallback className="bg-teal-100 text-teal-800">U</AvatarFallback>
                 </Avatar>
+                <ChevronDown className="ml-1 h-4 w-4 text-slate-500" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
+            <DropdownMenuContent align="end" className="w-56 border-slate-200 shadow-lg">
+              <DropdownMenuLabel className="font-medium text-slate-800">My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-slate-100" />
+              <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+                <Settings className="mr-2 h-4 w-4 text-slate-500" />
                 <span>Settings</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Info className="mr-2 h-4 w-4" />
+              <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+                <Info className="mr-2 h-4 w-4 text-slate-500" />
                 <span>Info</span>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LogOut className="mr-2 h-4 w-4" />
+              <DropdownMenuSeparator className="bg-slate-100" />
+              <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+                <LogOut className="mr-2 h-4 w-4 text-slate-500" />
                 <span>Logout</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -282,58 +294,98 @@ export default function UserDashboard() {
       </header>
 
       {/* Main content */}
-      <main className="container py-10">
-        <div className="flex flex-col items-center justify-center space-y-6">
-          <h2 className="text-2xl font-bold">Safety Monitoring System</h2>
+      <main className="container py-8">
+        <div className="flex flex-col items-center justify-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-center"
+          >
+            <h2 className="text-3xl font-bold tracking-tight text-slate-800">
+              Safety Monitoring System
+            </h2>
+            <p className="mt-2 text-slate-600 max-w-md">
+              Keep yourself protected with real-time accident detection and emergency response
+            </p>
+          </motion.div>
 
           {showDangerAlert && (
-            <Alert variant="destructive" className="max-w-md">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertTitle>Potential Danger Detected</AlertTitle>
-              <AlertDescription>{alertMessage}</AlertDescription>
-            </Alert>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="w-full max-w-md"
+            >
+              <Alert variant="destructive" className="border-red-200 bg-red-50">
+                <AlertTriangle className="h-5 w-5 text-red-600" />
+                <AlertTitle className="text-red-800">Potential Danger Detected</AlertTitle>
+                <AlertDescription className="text-red-700">
+                  {alertMessage}
+                </AlertDescription>
+              </Alert>
+            </motion.div>
           )}
          
-          <div className="flex gap-4">
-            {!showDangerAlert && (<Button onClick={handleOpenCamera} className="flex items-center gap-2">
-              <Camera className="h-4 w-4" />
-              Start Monitoring
-            </Button>)}
+          <div className="flex flex-col items-center gap-6 w-full max-w-md">
+            {!showDangerAlert && (
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full"
+              >
+                <Button 
+                  onClick={handleOpenCamera} 
+                  size="lg"
+                  className="w-full h-14 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600 shadow-lg"
+                >
+                  <Camera className="h-5 w-5 mr-2" />
+                  Start Monitoring
+                </Button>
+              </motion.div>
+            )}
             
-            <div className="flex-col items-center justify-center p-4 md:p-24 bg-white">
+            <div className="w-full">
               {accident && showDangerAlert && (
-                <AccidentNotification accidentId={accident} onDismiss={dismissNotification} />
+                <AccidentNotification 
+                  accidentId={accident} 
+                  onDismiss={dismissNotification} 
+                />
               )}
             </div>
           </div>
 
           {isRecording && (
-            <div className="flex items-center gap-2 text-green-600">
-              <div className="h-2 w-2 rounded-full bg-green-600 animate-pulse"></div>
-              <span>Monitoring active</span>
+            <div className="flex items-center gap-2 px-4 py-2 bg-teal-50 rounded-full">
+              <div className="h-2 w-2 rounded-full bg-teal-600 animate-pulse"></div>
+              <span className="text-sm font-medium text-teal-800">Active monitoring</span>
             </div>
           )}
         </div>
       </main>
 
-     {/* Camera Dialog */}
-     <Dialog
+      {/* Camera Dialog */}
+      <Dialog
         open={cameraOpen}
         onOpenChange={(open) => {
           if (!open) cleanupCamera()
           setCameraOpen(open)
         }}
       >
-        <DialogContent className="sm:max-w-[850px] p-0 bg-white rounded-xl shadow-lg overflow-hidden">
+        <DialogContent className="sm:max-w-[850px] p-0 bg-white rounded-xl shadow-xl overflow-hidden border-0">
           <div className="relative flex flex-col sm:flex-row">
             <DialogClose asChild>
-              <Button variant="ghost" size="icon" className="absolute top-3 right-3 z-10">
-                <X className="h-4 w-4" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="absolute top-4 right-4 z-10 rounded-full bg-white/90 backdrop-blur"
+              >
+                <X className="h-5 w-5 text-slate-700" />
               </Button>
             </DialogClose>
 
             {hasPermission === false ? (
-              <div className="w-full p-10 text-center text-gray-500">
+              <div className="w-full p-10 text-center text-slate-500">
+                <AlertTriangle className="h-10 w-10 mx-auto mb-4 text-red-500" />
                 <p>Camera permission denied. Please enable access in your browser settings.</p>
               </div>
             ) : (
@@ -344,19 +396,34 @@ export default function UserDashboard() {
                       ref={webcamRef}
                       audio={false}
                       screenshotFormat="image/jpeg"
-                      className="w-full h-full object-cover aspect-video rounded-l-xl"
+                      className="w-full h-full object-cover aspect-video"
                     />
                   </div>
-                  <div className="w-full sm:w-1/4 p-6 flex flex-col justify-center items-center space-y-4 bg-gray-50">
+                  <div className="w-full sm:w-1/4 p-6 flex flex-col justify-center items-center space-y-4 bg-slate-50">
                     {!isRecording ? (
-                      <Button onClick={startRecording} className="w-full">
+                      <Button 
+                        onClick={startRecording} 
+                        className="w-full bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600"
+                      >
                         Start Monitoring
                       </Button>
                     ) : (
-                      <Button onClick={stopRecording} variant="destructive" className="w-full">
+                      <Button 
+                        onClick={stopRecording} 
+                        variant="destructive" 
+                        className="w-full"
+                      >
+                        <StopCircle className="h-4 w-4 mr-2" />
                         Stop Monitoring
                       </Button>
                     )}
+                    <div className="text-center text-sm text-slate-500 mt-4">
+                      {isRecording ? (
+                        <p>Monitoring your safety in real-time</p>
+                      ) : (
+                        <p>Ready to begin monitoring</p>
+                      )}
+                    </div>
                   </div>
                 </>
               )
@@ -374,31 +441,44 @@ export default function UserDashboard() {
           }
         }}
       >
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="text-center text-red-600 flex items-center justify-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Emergency Confirmation
+        <DialogContent className="sm:max-w-[425px] rounded-xl border-0 shadow-xl">
+          <DialogHeader className="text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 mb-4">
+              <AlertTriangle className="h-6 w-6 text-red-600" />
+            </div>
+            <DialogTitle className="text-2xl font-bold text-red-600">
+              Emergency Alert
             </DialogTitle>
-            <DialogDescription className="text-center pt-2">
+            <DialogDescription className="text-slate-600 pt-2">
               {alertMessage}
             </DialogDescription>
           </DialogHeader>
-          <div className="py-2">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Clock className="h-4 w-4 text-red-500" />
-              <span className="text-sm font-medium">
-                Automatic emergency signal in:{" "}
-                <span className="text-red-500">{formatTimeRemaining()}</span>
+          <div className="py-4">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Clock className="h-5 w-5 text-red-500" />
+              <span className="text-sm font-medium text-slate-700">
+                Automatic alert in: <span className="font-bold text-red-600">{formatTimeRemaining()}</span>
               </span>
             </div>
-            <Progress value={(timeRemaining / 120) * 100} className="h-2" />
+            <Progress 
+              value={(timeRemaining / 120) * 100} 
+              className="h-2 bg-slate-100" 
+              
+            />
           </div>
-          <DialogFooter className="flex sm:justify-center gap-4">
-            <Button variant="outline" onClick={handleSafeClick} className="flex-1">
+          <DialogFooter className="flex sm:justify-center gap-3">
+            <Button 
+              variant="outline" 
+              onClick={handleSafeClick} 
+              className="flex-1 border-slate-200 text-slate-700 hover:bg-slate-50"
+            >
               No, I'm Safe
             </Button>
-            <Button variant="destructive" onClick={() => handleConfirmation(true)} className="flex-1">
+            <Button 
+              variant="destructive" 
+              onClick={() => handleConfirmation(true)} 
+              className="flex-1 bg-red-600 hover:bg-red-700"
+            >
               Yes, Need Help
             </Button>
           </DialogFooter>
@@ -412,33 +492,34 @@ export default function UserDashboard() {
           if (!open) setShowSafeConfirm(false)
         }}
       >
-        <DialogContent className="sm:max-w-[300px]">
-          <DialogHeader>
-            <DialogTitle className="text-center">Are you sure?</DialogTitle>
-            <DialogDescription className="text-center">
+        <DialogContent className="sm:max-w-[350px] rounded-xl border-0 shadow-xl">
+          <DialogHeader className="text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-100 mb-4">
+              <AlertTriangle className="h-6 w-6 text-teal-600" />
+            </div>
+            <DialogTitle className="text-xl font-bold text-slate-800">
+              Are you sure?
+            </DialogTitle>
+            <DialogDescription className="text-slate-600">
               If you are really safe, press confirm to resume monitoring.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex sm:justify-center gap-4">
+          <DialogFooter className="flex sm:justify-center gap-3">
             <Button
               variant="outline"
-              onClick={() => {
-                // Cancel the safe confirmation: keep the emergency modal active.
-                setShowSafeConfirm(false)
-              }}
-              className="flex-1"
+              onClick={() => setShowSafeConfirm(false)}
+              className="flex-1 border-slate-200 text-slate-700 hover:bg-slate-50"
             >
               Cancel
             </Button>
             <Button
-              variant="secondary"
               onClick={() => {
                 setShowSafeConfirm(false)
                 handleConfirmation(false)
               }}
-              className="flex-1"
+              className="flex-1 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600"
             >
-              Yes, I'm Safe
+              Confirm Safe
             </Button>
           </DialogFooter>
         </DialogContent>
