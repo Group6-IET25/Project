@@ -29,6 +29,10 @@ function Sidebar() {
             </NavLink>
             <NavLink to="/hospitaldashboard/trackingPatients" className={linkClasses}>
               <Users className="h-5 w-5" />
+              Live Patients
+            </NavLink>
+              <NavLink to="/hospitaldashboard/confirmPatients" className={linkClasses}>
+              <Users className="h-5 w-5" />
               Patients
             </NavLink>
             <NavLink to="/home/notifications" className={linkClasses}>
