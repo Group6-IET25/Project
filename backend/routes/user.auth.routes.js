@@ -36,14 +36,15 @@ async function signup(req, res) {
     const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(password, salt)
     //  to convert special characters and spaces into a URL-safe format — called URL encoding.
-    const encodedAddress = encodeURIComponent(address)
+    // const encodedAddress = encodeURIComponent(address)
     const newUser = new User({
       name,
       email,
       password: hashPassword,
       personalContact,
       familyContact,
-      address: `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`,
+      address,
+      // address: `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`,
     })
     // google maps api to convert address to pinpoint on map
 
