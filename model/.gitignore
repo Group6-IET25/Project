@@ -41,3 +41,8 @@ coverage.xml
 # Mac / Linux / Windows system files
 .DS_Store
 Thumbs.db
+
+# not reequired
+video/
+dataset/
+index.html

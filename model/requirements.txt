@@ -1,6 +1,8 @@
+tensorflow
+opencv-python
+numpy
+matplotlib
 fastapi 
 uvicorn 
-python-multipart 
+python-multipart
 pillow
-shutil
-os
