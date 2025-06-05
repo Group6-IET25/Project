@@ -5,10 +5,11 @@ import { AlertTriangle, Bell } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react'
 import {motion} from 'framer-motion'
 import { useLocation } from 'react-router-dom';
-import { toast } from 'sonner';
 const token = localStorage.getItem("jwt")
-//Priority 
-//Live Patients route 
+
+
+//Patients
+//work on it
 
 function Patients() {
       const location = useLocation();
@@ -67,10 +68,10 @@ function Patients() {
         setIsLoading(true)
         setError(null)
         try {
-          const res = await fetch("http://192.168.23.204:5000/api/monitor/healthcare/currentlyHelping", {
+          const res = await fetch("http://192.168.23.204:5000/api/monitor/healthcare/previouslyHelped",{
              method : "POST",
               headers: { "Content-Type": "application/json" },
-               body : JSON.stringify({token})
+             body : JSON.stringify({token})
           })
           if (!res.ok) throw new Error('Failed to fetch notifications')
           const data = await res.json()
@@ -83,34 +84,9 @@ function Patients() {
         }
       }, [])
 
-      const userReachedHospital = async (accidentId) => {
-        if (!accidentId) {
-          toast.error("Missing accidentId or token")
-          return
-        }
-
-    try {
-      const res = await fetch("http://192.168.23.204:5000/api/monitor/healthcare/markDone", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ accidentId})
-      })
-
-      if (!res.ok) {
-        throw new Error("Failed to mark response")
-      }
-     setAccidentNotifications(prev => prev.filter(notification => notification._id !== accidentId));
-
-      toast.success("Process successfully completed")
-    } catch (err) {
-      toast.error(err.message)
-      console.error("Error confirming response:", err)
-    }
-  }
-
 
 useEffect(() => {
-  if (location.pathname === "/hospitaldashboard/trackingPatients") {
+  if (location.pathname === "/hospitaldashboard/confirmPatients") {
     fetchNotifications();
     const intervalId = setInterval(fetchNotifications, 10000);
 
@@ -181,14 +157,9 @@ useEffect(() => {
                           </div>
                         </div>
                         <div className="flex justify-end gap-2 pt-2">
-                           <a
-                            href={notification.userId?.address}
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            <Button size="sm" variant="outline" className="border-slate-200 text-slate-700" >
-                              View Location
-                            </Button>
-                          </a>
+                          <Button size="sm" variant="outline" className="border-slate-200 text-slate-700">
+                            View Location
+                          </Button>
                           
                             <Dialog open={showResponseDialog} onOpenChange={setShowResponseDialog}>
                               <DialogContent className="sm:max-w-[425px] rounded-xl border-0 shadow-xl">
@@ -220,10 +191,9 @@ useEffect(() => {
                                     Cancel
                                   </Button>
                                   <Button
-                                    onClick={async() => {
+                                    onClick={() => {
                                       // Add your response logic here
                                       console.log("Responding to:", currentNotification)
-                                      await userReachedHospital(currentNotification?._id)
                                       setShowResponseDialog(false)
                                     }}
                                     className="flex-1 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600"

@@ -8,6 +8,7 @@ import UserDashboard from './pages/UserDashboard'
 import Home from './pages/Home'
 import LiveUser from './lib/liveUser'
 import Tracking from './lib/tracking'
+import Patients from './lib/patients'
 
 
 function App() {
@@ -23,11 +24,11 @@ function App() {
              {/* <Route element={<ProtectedRoute/>}> */}
                 
                 <Route path='/hospitaldashboard' element={<HospitalDashboard/>}>
-                    <Route index element={<LiveUser/>} />
-                     <Route path='trackingPatients' element={<Tracking/>} />
-                     {/* <Route path='confirmPatients' element={}/> */}
+                     <Route index element={<LiveUser/>} />
+                     <Route path='trackingPatients' element={<Tracking/>}/>
+                     <Route path='confirmPatients' element={<Patients/>}/>
                 </Route>
-                <Route path='/userdashboard' element={<UserDashboard/>} />
+                <Route path='/userdashboard' element={<UserDashboard/>}/>
 
                 <Route path='/share/' element={"hello"}/>
              {/* </Route> */}
