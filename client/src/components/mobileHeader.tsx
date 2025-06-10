@@ -22,7 +22,7 @@ function MobileHeader() {
             <div className="flex items-center gap-2 p-4">
               <Shield className="h-7 w-7 text-teal-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
-                AccidentShield
+                Accisense
               </span>
             </div>
             <nav className="grid gap-1 mt-6">
@@ -50,14 +50,14 @@ function MobileHeader() {
                 <Bell className="h-5 w-5" />
                 Notifications
               </Link>
-              <Link
+              {/* <Link
                 to="/home"
                 className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
                 onClick={() => setSidebarOpen(false)}
               >
                 <Settings className="h-5 w-5" />
                 Settings
-              </Link>
+              </Link> */}
             </nav>
           </SheetContent>
         </Sheet>
@@ -78,10 +78,10 @@ function MobileHeader() {
           <DropdownMenuContent align="end" className="w-56 border-slate-200 shadow-lg">
             <DropdownMenuLabel className="font-medium text-slate-800">My Account</DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-slate-100" />
-            <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+            {/* <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
               <Settings className="mr-2 h-4 w-4 text-slate-500" />
               Settings
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">Log out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

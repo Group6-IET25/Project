@@ -22,7 +22,7 @@ export default function AuthCard() {
     console.log("data", data);
     
     try {
-      const response = await fetch(`http://192.168.81.204:5000/api/auth/user/signup/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/user/signup/`, {
         method: "POST",
         credentials : "include",
         headers: { "Content-Type": "application/json" },
@@ -48,7 +48,7 @@ export default function AuthCard() {
   // API call for user login
   const handleUserLogin = async (data: any) => {
     try {
-      const response = await fetch(`http://192.168.81.204:5000/api/auth/user/login/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/user/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -72,7 +72,7 @@ export default function AuthCard() {
   // API call for hospital signup
   const handleHospitalSignup = async (data: any) => {
     try {
-      const response = await fetch(`http://192.168.81.204:5000/api/auth/healthcare/signup/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/healthcare/signup/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -95,7 +95,7 @@ export default function AuthCard() {
   // API call for hospital login
   const handleHospitalLogin = async (data: any) => {
     try {
-      const response = await fetch(`http://192.168.81.204:5000/api/auth/healthcare/login/`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/healthcare/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -154,7 +154,7 @@ export default function AuthCard() {
             <div className="flex justify-center items-center gap-2 mb-2">
               <Shield className="h-7 w-7 text-teal-600" />
               <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
-                AccidentShield
+                Accisense
               </span>
             </div>
             <CardTitle className="text-2xl font-bold text-slate-800">
@@ -226,17 +226,17 @@ export default function AuthCard() {
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-slate-200"></span>
               </div>
-              <div className="relative flex justify-center text-xs uppercase">
+              {/* <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-white px-2 text-slate-500">Or continue with</span>
-              </div>
+              </div> */}
             </div>
 
-            <Button variant="outline" className="w-full h-11">
+            {/* <Button variant="outline" className="w-full h-11">
               <svg className="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
                 <path fillRule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clipRule="evenodd"/>
               </svg>
               Google
-            </Button>
+            </Button> */}
           </CardContent>
           <CardFooter className="flex justify-center">
             <p className="text-sm text-slate-500 text-center">
@@ -261,11 +261,11 @@ function UserSignInForm({ formRef, handleSubmit }: { formRef: any, handleSubmit:
     <form ref={formRef} className="space-y-4" onSubmit={handleSubmit}>
       <InputField label="Email" id="email" type="email" placeholder="Enter your email" />
       <InputField label="Password" id="password" type="password" placeholder="Enter your password" />
-      <div className="flex items-center justify-end">
+      {/* <div className="flex items-center justify-end">
         <Link to="/forgot-password" className="text-sm font-medium text-teal-600 hover:text-teal-500">
           Forgot password?
         </Link>
-      </div>
+      </div> */}
       <Button 
         type="submit" 
         className="w-full h-11 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600"
@@ -300,11 +300,11 @@ function HospitalSignInForm({ formRef, handleSubmit }: { formRef: any, handleSub
     <form ref={formRef} className="space-y-4" onSubmit={handleSubmit}>
       <InputField label="Email" id="email" type="email" placeholder="Enter hospital email" />
       <InputField label="Password" id="password" type="password" placeholder="Enter password" />
-      <div className="flex items-center justify-end">
+      {/* <div className="flex items-center justify-end">
         <Link to="/forgot-password" className="text-sm font-medium text-teal-600 hover:text-teal-500">
           Forgot password?
         </Link>
-      </div>
+      </div> */}
       <Button 
         type="submit" 
         className="w-full h-11 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600"

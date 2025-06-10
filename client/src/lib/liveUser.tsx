@@ -33,7 +33,7 @@ function LiveUser() {
     setIsLoading(true)
     setError(null)
     try {
-      const res = await fetch("http://192.168.23.204:5000/api/monitor/healthcare/needsHelp")
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/monitor/healthcare/needsHelp`)
       if (!res.ok) throw new Error('Failed to fetch notifications')
       const data = await res.json()
       setAccidentNotifications(data)
@@ -52,7 +52,7 @@ function LiveUser() {
     }
 
     try {
-      const res = await fetch("http://192.168.23.204:5000/api/monitor/healthcare/markHelping", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/monitor/healthcare/markHelping`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ accidentId, token })
@@ -101,9 +101,9 @@ function LiveUser() {
                   <CardTitle className="text-lg text-slate-800">
                     {notification.userId?.name}
                   </CardTitle>
-                  <p className="text-sm text-slate-500">
+                  {/* <p className="text-sm text-slate-500">
                     {new Date().toLocaleString()}
-                  </p>
+                  </p> */}
                 </div>
                 <div className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                   Emergency
@@ -133,7 +133,7 @@ function LiveUser() {
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
                     <a
-                      href={notification.userId?.address}
+                      href={notification.accidentLocation}
                       target="_blank"
                       rel="noopener noreferrer">
                       <Button size="sm" variant="outline" className="border-slate-200 text-slate-700" >
