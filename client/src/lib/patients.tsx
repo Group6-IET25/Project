@@ -13,44 +13,7 @@ const token = localStorage.getItem("jwt")
 
 function Patients() {
       const location = useLocation();
-      const [accidentNotifications, setAccidentNotifications] = useState([
-      {
-        _id: "1",
-        userId: {
-          _id: "user1",
-          name: "John Doe",
-          personalContact: "+1 (555) 123-4567",
-          familyContact: "+1 (555) 987-6543",
-          address: "123 Main St, Anytown, USA"
-        },
-        timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 minutes ago
-        status: "pending"
-      },
-      {
-        _id: "2",
-        userId: {
-          _id: "user2",
-          name: "Jane Smith",
-          personalContact: "+1 (555) 234-5678",
-          familyContact: "+1 (555) 876-5432",
-          address: "456 Oak Ave, Somewhere, USA"
-        },
-        timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(), // 15 minutes ago
-        status: "pending"
-      },
-      {
-        _id: "3",
-        userId: {
-          _id: "user3",
-          name: "Robert Johnson",
-          personalContact: "+1 (555) 345-6789",
-          familyContact: "+1 (555) 765-4321",
-          address: "789 Pine Rd, Nowhere, USA"
-        },
-        timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
-        status: "responded"
-      }
-    ])
+      const [accidentNotifications, setAccidentNotifications] = useState([])
       const [isLoading, setIsLoading] = useState(false)
       const [error, setError] = useState(null)
       // Add this state at the top of your component
@@ -68,7 +31,7 @@ function Patients() {
         setIsLoading(true)
         setError(null)
         try {
-          const res = await fetch("http://192.168.23.204:5000/api/monitor/healthcare/previouslyHelped",{
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/monitor/healthcare/previouslyHelped`,{
              method : "POST",
               headers: { "Content-Type": "application/json" },
              body : JSON.stringify({token})
@@ -126,12 +89,12 @@ useEffect(() => {
                         <CardTitle className="text-lg text-slate-800">
                           {notification.userId?.name}
                         </CardTitle>
-                        <p className="text-sm text-slate-500">
+                        {/* <p className="text-sm text-slate-500">
                           {new Date(notification.timestamp).toLocaleString()}
-                        </p>
+                        </p> */}
                       </div>
-                      <div className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                        Emergency
+                      <div className="bg-green-700 text-white text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        Helped
                       </div>
                     </CardHeader>
                     <CardContent>
@@ -157,9 +120,14 @@ useEffect(() => {
                           </div>
                         </div>
                         <div className="flex justify-end gap-2 pt-2">
+                            <a
+                       href={notification.accidentLocation}
+                      target="_blank"
+                      rel="noopener noreferrer">
                           <Button size="sm" variant="outline" className="border-slate-200 text-slate-700">
                             View Location
                           </Button>
+                          </a>
                           
                             <Dialog open={showResponseDialog} onOpenChange={setShowResponseDialog}>
                               <DialogContent className="sm:max-w-[425px] rounded-xl border-0 shadow-xl">
@@ -203,13 +171,13 @@ useEffect(() => {
                                 </DialogFooter>
                               </DialogContent>
                             </Dialog>
-                         <Button 
+                         {/* <Button 
                           size="sm" 
-                          className="bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600"
+                          className="bg-gradient-vto-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600"
                           onClick={() => handleRespondClick(notification)}
                         >
                           Respond Now
-                        </Button>
+                        </Button> */}
                         </div>
                       </div>
                     </CardContent>

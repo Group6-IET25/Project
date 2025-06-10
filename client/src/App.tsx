@@ -9,9 +9,12 @@ import Home from './pages/Home'
 import LiveUser from './lib/liveUser'
 import Tracking from './lib/tracking'
 import Patients from './lib/patients'
+import ProtectedRoute from './Auth/ProtectedRoute'
 
 
 function App() {
+
+ //console.log("hi", import.meta.env.VITE_API_URL)
 
   return (
     <>
@@ -21,7 +24,7 @@ function App() {
              <Route path='/home' element = {<AuthCard/>}/>
              <Route path='/' element = {<Home/>}/>
 
-             {/* <Route element={<ProtectedRoute/>}> */}
+             <Route element={<ProtectedRoute/>}>
                 
                 <Route path='/hospitaldashboard' element={<HospitalDashboard/>}>
                      <Route index element={<LiveUser/>} />
@@ -31,7 +34,7 @@ function App() {
                 <Route path='/userdashboard' element={<UserDashboard/>}/>
 
                 <Route path='/share/' element={"hello"}/>
-             {/* </Route> */}
+             </Route>
           </Routes>
        </BrowserRouter>
     </>

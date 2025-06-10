@@ -15,7 +15,7 @@ function Sidebar() {
         <NavLink to="/hospitaldashboard" className="flex items-center gap-2">
           <Shield className="h-7 w-7 text-teal-600" />
           <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
-            AccidentShield
+            Accisense
           </span>
         </NavLink>
       </div>
@@ -35,14 +35,14 @@ function Sidebar() {
               <Users className="h-5 w-5" />
               Patients
             </NavLink>
-            <NavLink to="/home/notifications" className={linkClasses}>
+            {/* <NavLink to="/home/notifications" className={linkClasses}>
               <Bell className="h-5 w-5" />
               Notifications
             </NavLink>
             <NavLink to="/home/settings" className={linkClasses}>
               <Settings className="h-5 w-5" />
               Settings
-            </NavLink>
+            </NavLink> */}
           </div>
         </div>
       </nav>

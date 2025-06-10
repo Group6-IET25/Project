@@ -175,7 +175,7 @@ export default function UserDashboard() {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords
       try {
-        const res = await fetch("http://192.168.81.204:5000/api/monitor/user/response", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/monitor/user/response`, {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
@@ -200,7 +200,7 @@ export default function UserDashboard() {
         const formData = new FormData()
         formData.append('frame', blob, `frame-${Date.now()}.jpg`)
         try {
-          const res = await fetch("http://192.168.81.204:5000/api/monitor/user/upload", { method: "POST", body: formData })
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/monitor/user/upload`, { method: "POST", body: formData })
           const result = await res.json()
           if (result.accident === true) {
             simulateDangerDetection()
@@ -259,7 +259,7 @@ export default function UserDashboard() {
           <div className="flex items-center gap-2">
             <Shield className="h-7 w-7 text-teal-600" />
             <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
-              AccidentShield
+              Acciense
             </span>
           </div>
           <DropdownMenu>
@@ -275,16 +275,22 @@ export default function UserDashboard() {
             <DropdownMenuContent align="end" className="w-56 border-slate-200 shadow-lg">
               <DropdownMenuLabel className="font-medium text-slate-800">My Account</DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-slate-100" />
-              <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+              {/* <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
                 <Settings className="mr-2 h-4 w-4 text-slate-500" />
                 <span>Settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+              </DropdownMenuItem> */}
+              {/* <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
                 <Info className="mr-2 h-4 w-4 text-slate-500" />
                 <span>Info</span>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator className="bg-slate-100" />
-              <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+              <DropdownMenuItem 
+                   className="text-slate-700 hover:bg-slate-50"  
+                    onClick={() => {
+                    localStorage.removeItem("jwt"); // Replace 'yourKey' with your actual key, e.g., "authToken"
+                    window.location.reload(); // Optional: reload or redirect after logout
+                  }}>
+
                 <LogOut className="mr-2 h-4 w-4 text-slate-500" />
                 <span>Logout</span>
               </DropdownMenuItem>
@@ -373,7 +379,7 @@ export default function UserDashboard() {
       >
         <DialogContent className="sm:max-w-[850px] p-0 bg-white rounded-xl shadow-xl overflow-hidden border-0">
           <div className="relative flex flex-col sm:flex-row">
-            <DialogClose asChild>
+            {/* <DialogClose asChild>
               <Button 
                 variant="ghost" 
                 size="icon" 
@@ -381,7 +387,7 @@ export default function UserDashboard() {
               >
                 <X className="h-5 w-5 text-slate-700" />
               </Button>
-            </DialogClose>
+            </DialogClose> */}
 
             {hasPermission === false ? (
               <div className="w-full p-10 text-center text-slate-500">

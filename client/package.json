@@ -11,6 +11,7 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@ngrok/ngrok": "^1.5.1",
     "@radix-ui/react-accordion": "^1.2.10",
     "@radix-ui/react-avatar": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.6",

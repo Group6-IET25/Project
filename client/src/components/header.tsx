@@ -23,12 +23,15 @@ function Header() {
               <DropdownMenuContent align="end" className="w-56 border-slate-200 shadow-lg">
                 <DropdownMenuLabel className="font-medium text-slate-800">My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-slate-100" />
-                <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
+                {/* <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">
                   <Settings className="mr-2 h-4 w-4 text-slate-500" />
                   Settings
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuSeparator className="bg-slate-100" />
-                <DropdownMenuItem className="text-slate-700 hover:bg-slate-50">Log out</DropdownMenuItem>
+                <DropdownMenuItem className="text-slate-700 hover:bg-slate-50"   onClick={() => {
+                    localStorage.removeItem("jwt"); // Replace 'yourKey' with your actual key, e.g., "authToken"
+                    window.location.reload(); // Optional: reload or redirect after logout
+                  }}>Log out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

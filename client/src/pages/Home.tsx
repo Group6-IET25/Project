@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 // import Image from "iamge"
 import { motion } from "framer-motion"
-import { ArrowRight, Shield, Clock, Menu, X, ChevronRight, Users, Award, CheckCircle, Phone } from "lucide-react"
+import { ArrowRight, Shield, Clock, Menu, X, ChevronRight, Users, Award, CheckCircle, Phone, ShieldCheck, HeartPulse, Hospital, Radar } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -49,12 +49,12 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Floating Contact Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      {/* <div className="fixed bottom-6 right-6 z-50">
         <Button size="lg" className="rounded-full h-14 w-14 bg-teal-600 hover:bg-teal-700 shadow-lg">
           <Phone className="h-6 w-6" />
           <span className="sr-only">Contact Us</span>
         </Button>
-      </div>
+      </div> */}
 
       {/* Navbar */}
       <header
@@ -66,31 +66,12 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <Shield className="h-7 w-7 text-teal-600" />
             <span className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
-              AccidentShield
+              AcciSense
             </span>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link to="#features" className="text-sm font-medium hover:text-teal-600 transition-colors">
-              Features
-            </Link>
-            <Link to="#how-it-works" className="text-sm font-medium hover:text-teal-600 transition-colors">
-              How It Works
-            </Link>
-            <Link to="#testimonials" className="text-sm font-medium hover:text-teal-600 transition-colors">
-              Testimonials
-            </Link>
-            <Link to="#pricing" className="text-sm font-medium hover:text-teal-600 transition-colors">
-              Pricing
-            </Link>
-            <Link to="#faq" className="text-sm font-medium hover:text-teal-600 transition-colors">
-              FAQ
-            </Link>
-            <Link to="#blog" className="text-sm font-medium hover:text-teal-600 transition-colors">
-              Blog
-            </Link>
-          </nav>
+       
 
           <div className="hidden md:flex items-center gap-4">
             <Link to="/home">
@@ -136,13 +117,13 @@ export default function Home() {
               >
                 Testimonials
               </Link>
-              <Link
+              {/* <Link
                 to="#pricing"
                 className="text-sm font-medium p-2 hover:bg-slate-50 rounded-md"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Pricing
-              </Link>
+              </Link> */}
               <Link
                 to="#faq"
                 className="text-sm font-medium p-2 hover:bg-slate-50 rounded-md"
@@ -197,22 +178,22 @@ export default function Home() {
               </h1>
               <p className="max-w-[800px] text-lg md:text-xl text-slate-600 mb-8">
                 Our AI-powered system uses your mobile camera to detect accidents instantly and alert nearby hospitals,
-                reducing emergency response time by up to 50% and potentially saving thousands of lives.
+                reducing emergency response time by and potentially saving thousands of lives.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/signup">
+                {/* <Link to="/signup">
                   <Button
                     size="lg"
                     className="rounded-full px-8 py-6 text-base bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600 border-0 shadow-lg"
                   >
                     Get Started <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                </Link>
-                <Link to="#how-it-works">
+                </Link> */}
+                {/* <Link to="#how-it-works">
                   <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-base">
                     Watch Demo
                   </Button>
-                </Link>
+                </Link> */}
               </div>
             </motion.div>
 
@@ -226,7 +207,7 @@ export default function Home() {
               <div className="relative rounded-xl overflow-hidden shadow-2xl border border-slate-200">
                 {/* <Image
                   src="/placeholder.svg?height=600&width=1200"
-                  alt="AccidentShield in action"
+                  alt="AcciSense in action"
                   width={1200}
                   height={600}
                   className="w-full h-auto"
@@ -243,7 +224,7 @@ export default function Home() {
               </div>
 
               {/* Floating Stats Cards */}
-              <div className="absolute -bottom-16 -right-8 md:right-0 w-64 h-32 bg-white rounded-lg shadow-xl p-4 border border-slate-100 hidden md:block">
+              {/* <div className="absolute -bottom-16 -right-8 md:right-0 w-64 h-32 bg-white rounded-lg shadow-xl p-4 border border-slate-100 hidden md:block">
                 <div className="flex items-center gap-4">
                   <div className="bg-teal-100 rounded-full p-3">
                     <Clock className="h-6 w-6 text-teal-700" />
@@ -253,9 +234,9 @@ export default function Home() {
                     <p className="text-sm text-slate-500">Faster Response</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="absolute -bottom-16 left-8 md:left-12 w-64 h-32 bg-white rounded-lg shadow-xl p-4 border border-slate-100 hidden md:block">
+              {/* <div className="absolute -bottom-16 left-8 md:left-12 w-64 h-32 bg-white rounded-lg shadow-xl p-4 border border-slate-100 hidden md:block">
                 <div className="flex items-center gap-4">
                   <div className="bg-emerald-100 rounded-full p-3">
                     <Users className="h-6 w-6 text-emerald-700" />
@@ -265,32 +246,32 @@ export default function Home() {
                     <p className="text-sm text-slate-500">Lives Saved</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </motion.div>
 
             {/* Trusted By Section */}
-            <div className="mt-32 text-center">
+            {/* <div className="mt-32 text-center">
               <p className="text-sm font-medium text-slate-500 mb-6">
                 TRUSTED BY LEADING HOSPITALS & EMERGENCY SERVICES
               </p>
               <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70">
                 <div className="w-24 h-12 relative grayscale hover:grayscale-0 transition-all">
-                  {/* <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 1" fill className="object-contain" /> */}
+                  <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 1" fill className="object-contain" />
                 </div>
                 <div className="w-24 h-12 relative grayscale hover:grayscale-0 transition-all">
-                  {/* <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 2" fill className="object-contain" /> */}
+                  <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 2" fill className="object-contain" />
                 </div>
                 <div className="w-24 h-12 relative grayscale hover:grayscale-0 transition-all">
-                  {/* <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 3" fill className="object-contain" /> */}
+                  <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 3" fill className="object-contain" />
                 </div>
                 <div className="w-24 h-12 relative grayscale hover:grayscale-0 transition-all">
-                  {/* <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 4" fill className="object-contain" /> */}
+                  <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 4" fill className="object-contain" />
                 </div>
                 <div className="w-24 h-12 relative grayscale hover:grayscale-0 transition-all">
-                  {/* <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 5" fill className="object-contain" /> */}
+                  <Image src="/placeholder.svg?height=48&width=96" alt="Hospital 5" fill className="object-contain" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -329,13 +310,10 @@ export default function Home() {
                     <h3 className="text-2xl font-bold mb-4">Real-Time Accident Detection</h3>
                     <p className="text-slate-600 mb-6">
                       Our advanced AI algorithms analyze video feeds from your mobile camera in real-time, detecting
-                      accidents with over 99% accuracy in various conditions.
+                      accidents with accuracy in various conditions.
                     </p>
                     <ul className="space-y-3">
                       {[
-                        "Advanced computer vision algorithms",
-                        "Works in various lighting conditions",
-                        "Detects multiple accident types",
                         "Low false positive rate",
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
@@ -355,10 +333,10 @@ export default function Home() {
                         className="w-full h-auto"
                       /> */}
                     </div>
-                    <div className="absolute -bottom-6 -left-6 bg-teal-600 text-white p-4 rounded-lg shadow-lg hidden md:block">
-                      <p className="font-bold">99.8% Accuracy</p>
+                    {/* <div className="absolute -bottom-6 -left-6 bg-teal-600 text-white p-4 rounded-lg shadow-lg hidden md:block">
+                      <p className="font-bold">94% Accuracy</p>
                       <p className="text-sm text-teal-100">In real-world testing</p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </TabsContent>
@@ -375,7 +353,6 @@ export default function Home() {
                       {[
                         "Simultaneous alerts to multiple hospitals",
                         "GPS location data included",
-                        "Accident severity classification",
                         "Automatic follow-up system",
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
@@ -395,10 +372,10 @@ export default function Home() {
                         className="w-full h-auto"
                       /> */}
                     </div>
-                    <div className="absolute -bottom-6 -left-6 bg-emerald-600 text-white p-4 rounded-lg shadow-lg hidden md:block">
+                    {/* <div className="absolute -bottom-6 -left-6 bg-emerald-600 text-white p-4 rounded-lg shadow-lg hidden md:block">
                       <p className="font-bold">&lt; 3 seconds</p>
                       <p className="text-sm text-emerald-100">Average alert time</p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </TabsContent>
@@ -413,8 +390,6 @@ export default function Home() {
                     </p>
                     <ul className="space-y-3">
                       {[
-                        "Smart hospital selection algorithm",
-                        "Traffic-aware routing",
                         "Real-time status updates",
                         "Automated medical record preparation",
                       ].map((item, i) => (
@@ -435,10 +410,10 @@ export default function Home() {
                         className="w-full h-auto"
                       /> */}
                     </div>
-                    <div className="absolute -bottom-6 -left-6 bg-teal-600 text-white p-4 rounded-lg shadow-lg hidden md:block">
+                    {/* <div className="absolute -bottom-6 -left-6 bg-teal-600 text-white p-4 rounded-lg shadow-lg hidden md:block">
                       <p className="font-bold">50% Faster</p>
                       <p className="text-sm text-teal-100">Emergency response</p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </TabsContent>
@@ -462,7 +437,7 @@ export default function Home() {
             >
               <Badge className="mb-4 bg-teal-100 text-teal-800 hover:bg-teal-100 px-4 py-1">Simple Process</Badge>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-                How AccidentShield <span className="text-teal-600">Works</span>
+                How AcciSense <span className="text-teal-600">Works</span>
               </h2>
               <p className="max-w-[800px] mx-auto text-slate-600 text-lg">
                 Our intuitive system is designed to be simple to use while providing powerful protection when accidents
@@ -490,7 +465,7 @@ export default function Home() {
                       </div>
                       <h3 className="text-2xl font-bold mb-3">Create Your Account</h3>
                       <p className="text-slate-600">
-                        Sign up for AccidentShield and create your profile with emergency contacts and relevant medical
+                        Sign up for AcciSense and create your profile with emergency contacts and relevant medical
                         information.
                       </p>
                     </div>
@@ -516,7 +491,7 @@ export default function Home() {
                       </div>
                       <h3 className="text-2xl font-bold mb-3">Activate Your Camera</h3>
                       <p className="text-slate-600">
-                        Open the AccidentShield app and activate your mobile camera. Our system will run in the
+                        Open the AcciSense app and activate your mobile camera. Our system will run in the
                         background while you drive.
                       </p>
                     </div>
@@ -558,8 +533,7 @@ export default function Home() {
                       </div>
                       <h3 className="text-2xl font-bold mb-3">Instant Hospital Alerts</h3>
                       <p className="text-slate-600">
-                        Multiple nearby hospitals receive instant notifications with your location, accident severity,
-                        and medical information.
+                        Multiple nearby hospitals receive instant notifications with your location.
                       </p>
                     </div>
                   </div>
@@ -591,71 +565,65 @@ export default function Home() {
         </section>
 
         {/* Statistics Section */}
-        <section className="py-24 md:py-32">
-          <div className="container">
-            <motion.div
-              className="text-center mb-16"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-            >
-              <Badge className="mb-4 bg-slate-100 text-slate-800 hover:bg-slate-100 px-4 py-1">Real Results</Badge>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-                Making a <span className="text-teal-600">Difference</span>
-              </h2>
-              <p className="max-w-[800px] mx-auto text-slate-600 text-lg">
-                Our technology is already saving lives and transforming emergency response systems worldwide.
-              </p>
-            </motion.div>
+      <section className="py-4 md:py-12 bg-slate-50">
+        <div className="container">
+          <motion.div
+            className="text-center mb-20"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+          >
+            <Badge className="mb-4 bg-teal-100 text-teal-800 px-4 py-1">
+              Real Results
+            </Badge>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+              Making a <span className="text-teal-600">Difference</span>
+            </h2>
+            <p className="max-w-[700px] mx-auto text-slate-600 text-lg">
+              Our smart technology is transforming emergency response systems and making the world a safer place—one alert at a time.
+            </p>
+          </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-4xl font-bold text-teal-600">50%</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base font-medium text-slate-700">
-                    Faster emergency response time
-                  </CardDescription>
-                </CardContent>
-              </Card>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <Card className="p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 bg-white rounded-2xl border-0">
+              <div className="flex justify-center mb-4">
+                <ShieldCheck className="h-10 w-10 text-teal-600" />
+              </div>
+              <CardDescription className="text-base font-medium text-slate-700">
+                Faster and more secure emergency responses
+              </CardDescription>
+            </Card>
 
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-4xl font-bold text-teal-600">10,000+</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base font-medium text-slate-700">
-                    Lives saved since launch
-                  </CardDescription>
-                </CardContent>
-              </Card>
+            <Card className="p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 bg-white rounded-2xl border-0">
+              <div className="flex justify-center mb-4">
+                <HeartPulse className="h-10 w-10 text-teal-600" />
+              </div>
+              <CardDescription className="text-base font-medium text-slate-700">
+                Life-saving alerts delivered in real time
+              </CardDescription>
+            </Card>
 
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-4xl font-bold text-teal-600">500+</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base font-medium text-slate-700">
-                    Hospital partners worldwide
-                  </CardDescription>
-                </CardContent>
-              </Card>
+            <Card className="p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 bg-white rounded-2xl border-0">
+              <div className="flex justify-center mb-4">
+                <Hospital className="h-10 w-10 text-teal-600" />
+              </div>
+              <CardDescription className="text-base font-medium text-slate-700">
+                Collaborations with medical institutions
+              </CardDescription>
+            </Card>
 
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-4xl font-bold text-teal-600">99.8%</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base font-medium text-slate-700">
-                    Accident detection accuracy
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            </div>
+            <Card className="p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 bg-white rounded-2xl border-0">
+              <div className="flex justify-center mb-4">
+                <Radar className="h-10 w-10 text-teal-600" />
+              </div>
+              <CardDescription className="text-base font-medium text-slate-700">
+                Intelligent accident detection
+              </CardDescription>
+            </Card>
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* Testimonials Section */}
         <section
@@ -666,7 +634,7 @@ export default function Home() {
           <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-teal-100/20 blur-3xl -z-10"></div>
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full bg-emerald-100/30 blur-3xl -z-10"></div>
 
-          <div className="container">
+          {/* <div className="container">
             <motion.div
               className="text-center mb-16"
               initial="hidden"
@@ -680,7 +648,7 @@ export default function Home() {
               </h2>
               <p className="max-w-[800px] mx-auto text-slate-600 text-lg">
                 Hear from hospitals, emergency services, and individuals who have experienced the power of
-                AccidentShield.
+                AcciSense.
               </p>
             </motion.div>
 
@@ -717,7 +685,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-700">
-                    "AccidentShield has revolutionized our emergency response system. We're now able to dispatch teams
+                    "AcciSense has revolutionized our emergency response system. We're now able to dispatch teams
                     up to 50% faster, which has directly contributed to saving countless lives."
                   </p>
                 </CardContent>
@@ -755,7 +723,7 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-700">
-                    "I was in a serious car accident last year. AccidentShield detected the crash immediately and
+                    "I was in a serious car accident last year. AcciSense detected the crash immediately and
                     alerted emergency services. The doctors told me that those saved minutes were crucial to my
                     recovery."
                   </p>
@@ -794,13 +762,13 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-700">
-                    "The detailed information we receive from AccidentShield allows us to prepare properly before
+                    "The detailed information we receive from AcciSense allows us to prepare properly before
                     arriving at the scene. It's a game-changer for emergency response coordination."
                   </p>
                 </CardContent>
               </Card>
             </div>
-          </div>
+          </div> */}
         </section>
 
         {/* FAQ Section */}
@@ -818,31 +786,24 @@ export default function Home() {
                 Frequently Asked <span className="text-teal-600">Questions</span>
               </h2>
               <p className="max-w-[800px] mx-auto text-slate-600 text-lg">
-                Find answers to common questions about AccidentShield.
+                Find answers to common questions about AcciSense.
               </p>
             </motion.div>
 
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>How does AccidentShield detect accidents?</AccordionTrigger>
+                  <AccordionTrigger>How does AcciSense detect accidents?</AccordionTrigger>
                   <AccordionContent>
-                    AccidentShield uses advanced AI and computer vision algorithms to analyze video feeds from your
+                    AcciSense uses advanced AI and computer vision algorithms to analyze video feeds from your
                     mobile camera in real-time. The system is trained to recognize various types of accidents and can
-                    detect crashes, falls, and other emergency situations with over 99% accuracy.
+                    detect crashes, falls, and other emergency situations.
                   </AccordionContent>
                 </AccordionItem>
+
+  
 
                 <AccordionItem value="item-2">
-                  <AccordionTrigger>Does AccidentShield work in all lighting conditions?</AccordionTrigger>
-                  <AccordionContent>
-                    Yes, AccidentShield is designed to work in various lighting conditions, including low light and
-                    nighttime scenarios. Our AI has been trained on diverse datasets to ensure reliable performance in
-                    different environments.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3">
                   <AccordionTrigger>How quickly are hospitals notified after an accident?</AccordionTrigger>
                   <AccordionContent>
                     Hospitals receive notifications within seconds of an accident being detected. Our system has an
@@ -850,30 +811,20 @@ export default function Home() {
                   </AccordionContent>
                 </AccordionItem>
 
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>Does AcciSense work without an internet connection?</AccordionTrigger>
+                  <AccordionContent>
+                    AcciSense requires an internet connection to send notifications to hospitals. However, the
+                    accident detection can not function without internet.
+                  </AccordionContent>
+                </AccordionItem>
+
                 <AccordionItem value="item-4">
-                  <AccordionTrigger>Does AccidentShield work without an internet connection?</AccordionTrigger>
+                  <AccordionTrigger>How does AcciSense protect my privacy?</AccordionTrigger>
                   <AccordionContent>
-                    AccidentShield requires an internet connection to send notifications to hospitals. However, the
-                    accident detection can still function offline, and the system will queue notifications to be sent as
-                    soon as a connection is reestablished.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-5">
-                  <AccordionTrigger>How does AccidentShield protect my privacy?</AccordionTrigger>
-                  <AccordionContent>
-                    We take privacy seriously. AccidentShield only processes video data for accident detection and does
-                    not store video footage. Your personal and medical information is encrypted and only shared with
+                    We take privacy seriously. AcciSense only processes video data for accident detection and does
+                    not store video footage. Your personal information is encrypted and only shared with
                     emergency services in the event of an accident.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-6">
-                  <AccordionTrigger>Can I use AccidentShield in any country?</AccordionTrigger>
-                  <AccordionContent>
-                    AccidentShield is available in over 30 countries worldwide. We're continuously expanding our
-                    coverage and integrating with local emergency services. Check our website for the most up-to-date
-                    list of supported countries.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -902,19 +853,19 @@ export default function Home() {
                 Ready to Transform Emergency Response?
               </h2>
               <p className="text-teal-50 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-                Join thousands of users who are already making a difference with AccidentShield. Sign up today and
+                Join thousands of users who are already making a difference with AcciSense. Sign up today and
                 experience the peace of mind that comes with knowing you're protected.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/home">
+                {/* <Link to="/">
                   <Button
                     size="lg"
                     className="rounded-full px-8 py-6 text-base bg-white text-teal-600 hover:bg-teal-50 shadow-lg"
                   >
                     Get Started <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                </Link>
-                <Link to="/contact">
+                </Link> */}
+                {/* <Link to="/contact">
                   <Button
                     size="lg"
                     variant="outline"
@@ -922,7 +873,7 @@ export default function Home() {
                   >
                     Contact Sales
                   </Button>
-                </Link>
+                </Link> */}
               </div>
               <div className="mt-12 flex items-center justify-center gap-8">
                 <div className="flex items-center gap-2">
@@ -933,10 +884,10 @@ export default function Home() {
                   <Clock className="h-5 w-5" />
                   <span className="font-medium">24/7 Support</span>
                 </div>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <Award className="h-5 w-5" />
                   <span className="font-medium">Award-Winning</span>
-                </div>
+                </div> */}
               </div>
             </motion.div>
           </div>
@@ -950,7 +901,7 @@ export default function Home() {
             <div className="col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="h-7 w-7 text-teal-400" />
-                <span className="text-2xl font-bold">AccidentShield</span>
+                <span className="text-2xl font-bold">AcciSense</span>
               </div>
               <p className="text-slate-400 mb-6">
                 Using mobile cameras to detect accidents and instantly alert nearby hospitals for faster emergency
@@ -1032,7 +983,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div>
+            {/* <div>
               <h3 className="font-bold text-lg mb-4">Product</h3>
               <ul className="space-y-3">
                 <li>
@@ -1061,9 +1012,9 @@ export default function Home() {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <h3 className="font-bold text-lg mb-4">Company</h3>
               <ul className="space-y-3">
                 <li>
@@ -1071,11 +1022,7 @@ export default function Home() {
                     About Us
                   </Link>
                 </li>
-                <li>
-                  <Link to="/careers" className="text-slate-400 hover:text-white transition-colors">
-                    Careers
-                  </Link>
-                </li>
+               
                 <li>
                   <Link to="#blog" className="text-slate-400 hover:text-white transition-colors">
                     Blog
@@ -1092,9 +1039,9 @@ export default function Home() {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <h3 className="font-bold text-lg mb-4">Support</h3>
               <ul className="space-y-3">
                 <li>
@@ -1123,12 +1070,12 @@ export default function Home() {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
 
-          <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center">
+          {/* <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center">
             <p className="text-slate-500 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} AccidentShield. All rights reserved.
+              © {new Date().getFullYear()} AcciSense. All rights reserved.
             </p>
             <div className="flex gap-6">
               <Link to="/terms" className="text-slate-500 hover:text-white text-sm transition-colors">
@@ -1141,7 +1088,7 @@ export default function Home() {
                 Cookie Policy
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </footer>
     </div>

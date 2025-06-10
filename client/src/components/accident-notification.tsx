@@ -61,6 +61,15 @@ export default function AccidentNotification({
     }
   }, [accidentId])
 
+  const handleClear = () => {
+     localStorage.removeItem("accidentId")
+     localStorage.removeItem("healthCare")
+     localStorage.removeItem("contact")
+     localStorage.removeItem("email")
+     localStorage.removeItem("name")
+     localStorage.removeItem("timeRemaining")
+  }
+
   const fetchHospitalData = async (accidentId: string): Promise<void> => {
     console.log(`Starting hospital data fetch for accident ID: ${accidentId}`)
 
@@ -73,23 +82,22 @@ export default function AccidentNotification({
     const MAX_DURATION = 10 * 60 * 1000 // 10 minutes
 
     const poll = async (): Promise<void> => {
-      try {
-        const response = await fetch(
-          "http://192.168.81.204:5000/api/monitor/user/track",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ accidentId }),
-          }
-        )
+    
+       try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/monitor/user/track`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ accidentId }),
+        });
 
+
+        
         const result = await response.json()
         const elapsed = Date.now() - startTime
 
-        if (
-          result.message === "Someone will soon connect !" &&
+        if (result.message &&
           elapsed < MAX_DURATION
         ) {
           console.log("Polling...")
@@ -165,10 +173,13 @@ export default function AccidentNotification({
           <span>Accident Detected</span>
         </CardTitle>
         {onDismiss && (
-          <Button
+         <Button
             variant="ghost"
             size="icon"
-            onClick={onDismiss}
+            onClick={() => {
+              handleClear()
+              if (onDismiss) onDismiss()
+            }}
             className="h-8 w-8"
           >
             <X className="h-4 w-4" />
@@ -181,10 +192,10 @@ export default function AccidentNotification({
           <div>
             <h3 className="font-semibold text-lg">{hospital.name}</h3>
           </div>
-          <div className="flex items-start gap-2">
+          {/* <div className="flex items-start gap-2">
             <MapPin className="h-5 w-5 text-gray-500 mt-0.5 flex-shrink-0" />
             <p className="text-sm">{hospital.address}</p>
-          </div>
+          </div> */}
           <div className="flex items-center gap-2">
             <Mail className="h-5 w-5 text-gray-500 flex-shrink-0" />
             <p className="text-sm">{hospital.email}</p>
@@ -195,11 +206,11 @@ export default function AccidentNotification({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="bg-red-50">
+      {/* <CardFooter className="bg-red-50">
         <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
           Contact Emergency Services
         </Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 }
